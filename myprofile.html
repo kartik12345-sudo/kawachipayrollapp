@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #1e1e2f, #2b2b3f);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .profile-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 20px;
+    }
+
+    .avatar-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -10px; left: -10px;
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(45deg, #FF0000, #FF7300, #FFFB00, #48FF00, #00FFD5, #002BFF, #FF00C8, #FF0000);
+      background-size: 600%;
+      border-radius: 50%;
+      filter: blur(10px);
+      z-index: 0;
+      animation: glowing 20s linear infinite;
+    }
+
+    .avatar {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      z-index: 1;
+      animation: popIn 1.5s ease;
+    }
+
+    a {
+      display: inline-block;
+      margin: 10px 0 20px;
+      text-decoration: none;
+      color: #89cfff;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      animation: slideUp 1s ease;
+    }
+
+    p.role {
+      color: #aaa;
+      font-size: 1.1em;
+      animation: slideUp 1.2s ease;
+    }
+
+    ul.roles {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    ul.roles li {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px 15px;
+      border-radius: 12px;
+      margin: 8px 0;
+      transition: background 0.3s ease;
+    }
+
+    ul.roles li:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glowing {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-card">
+    <div class="avatar-wrapper">
+      <img class="avatar" src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-DBF007108582EFDE3780A7151F81E667-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="Avatar">
+    </div>
+    <a href="https://www.roblox.com/users/4448611911/profile" target="_blank">View My Profile on Roblox</a>
+    <h1>@AdityaBhardwaj</h1>
+    <p class="role">Developer • Owner • Tester</p>
+    <ul class="roles">
+      <li>🎮 Game Developer – Building experiences that players love.</li>
+      <li>🛠 Owner – Leading vision, features & direction.</li>
+      <li>✅ Tester – Quality first. I break it before players do.</li>
+    </ul>
+  </div>
+</body>
+</html>

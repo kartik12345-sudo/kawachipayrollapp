@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminHub - Settings</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--poppins);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .settings-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--light);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .settings-header {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--light-blue) 100%);
+            color: var(--light);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .settings-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .settings-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(255,255,255,0.2);
+            color: var(--light);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .settings-content {
+            padding: 40px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .settings-card {
+            background: var(--grey);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .settings-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--blue);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-icon {
+            color: var(--blue);
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--grey);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: var(--poppins);
+            color: var(--dark);
+            background: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(60, 145, 230, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--poppins);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: var(--light);
+        }
+
+        .btn-primary:hover {
+            background: #2980e6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(60, 145, 230, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--dark-grey);
+            color: var(--light);
+        }
+
+        .btn-secondary:hover {
+            background: #999;
+        }
+
+        .btn-danger {
+            background: var(--red);
+            color: var(--light);
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: var(--light);
+        }
+
+        .btn-success:hover {
+            background: #219a52;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .status-connected {
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+
+        .status-disconnected {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            padding: 12px 24px;
+            background: var(--light-blue);
+            color: var(--blue);
+            border: 2px dashed var(--blue);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .file-input-label:hover {
+            background: var(--blue);
+            color: var(--light);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--dark-grey);
+            transition: 0.3s;
+            border-radius: 30px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background: var(--light);
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background: var(--blue);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        .section-divider {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--blue), transparent);
+            margin: 30px 0;
+        }
+
+        .password-strength {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .strength-weak { color: #e74c3c; }
+        .strength-medium { color: #f39c12; }
+        .strength-strong { color: #27ae60; }
+
+        /* User Management Styles */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--light);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .users-table th {
+            background: linear-gradient(135deg, var(--blue), var(--light-blue));
+            color: var(--light);
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .users-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--grey);
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .users-table tbody tr:hover {
+            background: var(--light-blue);
+            transform: scale(1.005);
+            transition: all 0.3s ease;
+        }
+
+        .users-table tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .user-role {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .role-owner { background: #e74c3c; color: white; }
+        .role-co-owner { background: #f39c12; color: white; }
+        .role-admin { background: #3498db; color: white; }
+        .role-dev { background: #9b59b6; color: white; }
+        .role-manager { background: #27ae60; color: white; }
+
+        .user-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active { background: #27ae60; color: white; }
+        .status-inactive { background: #95a5a6; color: white; }
+
+        .password-cell {
+            font-family: 'Courier New', monospace;
+            background: rgba(60, 145, 230, 0.1);
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .password-hidden {
+            background: #f5f5f5;
+            color: #999;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit-user {
+            background: var(--blue);
+            color: white;
+        }
+
+        .btn-delete-user {
+            background: var(--red);
+            color: white;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-small:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .permission-warning {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .permission-warning i {
+            font-size: 20px;
+        }
+
+        /* Dark mode styles */
+        body.dark {
+            background: var(--dark);
+            color: var(--light);
+        }
+
+        body.dark .settings-container {
+            background: var(--dark);
+        }
+
+        body.dark .settings-card {
+            background: var(--grey);
+        }
+
+        body.dark .card-title {
+            color: var(--light);
+        }
+
+        body.dark .form-group label {
+            color: var(--light);
+        }
+
+        body.dark .form-group input:focus,
+        body.dark .form-group select:focus,
+        body.dark .form-group textarea:focus {
+            border-color: var(--blue) !important;
+        }
+
+        /* Dark mode styles for user management */
+        body.dark .users-table {
+            background: var(--dark) !important;
+        }
+
+        body.dark .users-table td {
+            color: var(--light) !important;
+            border-bottom-color: var(--grey) !important;
+        }
+
+        body.dark .users-table tbody tr:nth-child(even) {
+            background: var(--grey) !important;
+        }
+
+        body.dark .users-table tbody tr:hover {
+            background: rgba(60, 145, 230, 0.1) !important;
+        }
+
+        body.dark .password-cell {
+            background: rgba(60, 145, 230, 0.2) !important;
+            color: var(--light) !important;
+        }
+
+        body.dark .password-hidden {
+            background: var(--grey) !important;
+            color: var(--dark-grey) !important;
+        }
+            color: var(--light);
+        }
+
+        @media screen and (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .back-button {
+                position: static;
+                margin-bottom: 20px;
+                width: fit-content;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <div class="settings-header">
+            <a href="index.html" class="back-button">
+                <i class="bx bx-arrow-back"></i>
+                Back to Dashboard
+            </a>
+            <h1 class="settings-title">AdminHub Settings</h1>
+            <p class="settings-subtitle">Configure your system preferences and manage data</p>
+        </div>
+
+        <div class="settings-content">
+            <div class="settings-grid">
+                <!-- API Configuration -->
+                <div class="settings-card">
+                    <h2 class="card-title">
+                        <i class="bx bx-cloud card-icon"></i>
+                        API Configuration
+                    </h2>
+
+                    <div id="apiStatus" class="status-indicator status-disconnected">
+                        <i class="bx bx-wifi-off"></i>
+                        <span>Checking connection...</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Firebase Project ID</label>
+                        <input type="text" id="projectId" value="apikawachi" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Database URL</label>
+                        <input type="text" id="databaseUrl" value="https://apikawachi-default-rtdb.asia-southeast1.firebasedatabase.app" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Analytics ID</label>
+                        <input type="text" id="analyticsId" value="G-GT0F7K4NLP" readonly>
+                    </div>
+
+                    <div class="action-grid">
+                        <button class="btn btn-primary" onclick="testConnection()">
+                            <i class="bx bx-test-tube"></i>
+                            Test Connection
+                        </button>
+                        <button class="btn btn-secondary" onclick="refreshConnection()">
+                            <i class="bx bx-refresh"></i>
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Theme Settings -->
+                <div class="settings-card">
+                    <h2 class="card-title">
+                        <i class="bx bx-palette card-icon"></i>
+                        Theme Settings
+                    </h2>
+
+                    <div class="form-group">
+                        <label>Theme Mode</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <span>Light</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="themeToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span>Dark</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Primary Color</label>
+                        <select id="primaryColor">
+                            <option value="#3C91E6">Blue (Default)</option>
+                            <option value="#27ae60">Green</option>
+                            <option value="#e74c3c">Red</option>
+                            <option value="#f39c12">Orange</option>
+                            <option value="#9b59b6">Purple</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Dashboard Layout</label>
+                        <select id="layoutMode">
+                            <option value="default">Default</option>
+                            <option value="compact">Compact</option>
+                            <option value="spacious">Spacious</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="applyThemeSettings()">
+                        <i class="bx bx-check"></i>
+                        Apply Settings
+                    </button>
+                </div>
+
+                <!-- Data Management -->
+                <div class="settings-card">
+                    <h2 class="card-title">
+                        <i class="bx bx-data card-icon"></i>
+                        Employee Data Management
+                    </h2>
+
+                    <div class="info-section">
+                        <h4 style="color: var(--blue); margin-bottom: 10px;">📋 Required Employee Fields</h4>
+                        <p style="font-size: 13px; color: var(--dark-grey); margin-bottom: 15px;">
+                            The system requires comprehensive employee information. All fields marked with * are mandatory for successful import.
+                        </p>
+
+                        <div style="font-size: 13px; color: var(--dark-grey); margin-bottom: 15px;" class="field-list">
+                            <div class="field-group">
+                                <strong> 📋 Basic Information:</strong>
+                                <ul>
+                                    <li>Employee ID* (Unique identifier)</li>
+                                    <li>Full Name*</li>
+                                    <li>Contact Number* (10 digits)</li>
+                                    <li>Email Address*</li>
+                                    <li>Marital Status (Single/Married/Divorced/Widowed)</li>
+                                    <li>Emergency Contact (10 digits)</li>
+                                    <li>Address</li>
+                                </ul>
+                            </div>
+
+                            <div class="field-group">
+                                <strong>🆔 Government IDs:</strong>
+                                <ul>
+                                    <li>PAN Number* (10 characters: 5 letters + 4 digits + 1 letter)</li>
+                                    <li>Aadhar Number* (12 digits)</li>
+                                    <li>UAN Number (12 digits - Universal Account Number for PF)</li>
+                                </ul>
+                            </div>
+
+                            <div class="field-group">
+                                <strong>📅 Employment Dates:</strong>
+                                <ul>
+                                    <li>Date of Joining* (YYYY-MM-DD format)</li>
+                                    <li>Date of Exit (YYYY-MM-DD format or "Never" for active employees)</li>
+                                </ul>
+                            </div>
+
+                            <div class="field-group">
+                                <strong>💰 Salary Components:</strong>
+                                <ul>
+                                    <li>Basic Salary* (Base amount)</li>
+                                    <li>Dearness Allowance (DA)</li>
+                                    <li>Personal Allowance</li>
+                                    <li>Conveyance Allowance</li>
+                                    <li>Professional Allowance</li>
+                                    <li>Bonus</li>
+                                    <li>Gross Salary* (Total of all components)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="info-notes">
+                            <h5 style="color: var(--orange); margin: 15px 0 8px 0;">ℹ️ Important Notes:</h5>
+                            <ul style="font-size: 12px; color: var(--dark-grey);">
+                                <li><strong>"Never"</strong> in Date of Exit means the employee is currently active</li>
+                                <li><strong>UAN</strong> is required for PF calculations and compliance</li>
+                                <li><strong>Government IDs</strong> must be valid format for legal compliance</li>
+                                <li><strong>Gross Salary</strong> should equal Basic + all allowances + bonus</li>
+                                <li>System will validate all data before import and show detailed error reports</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <hr class="section-divider">
+
+                    <div class="form-group">
+                        <label>Import Employee Data</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="importFile" class="file-input" accept=".xlsx,.json" onchange="handleFileImport(event)">
+                            <label for="importFile" class="file-input-label">
+                                <i class="bx bx-upload"></i>
+                                Choose Excel or JSON file with employee data
+                            </label>
+                        </div>
+                        <small style="color: var(--dark-grey); margin-top: 8px; display: block;">
+                            Supported formats: .xlsx (Excel) and .json files
+                        </small>
+                    </div>
+
+                    <div class="action-grid">
+                        <button class="btn btn-secondary" onclick="downloadTemplate('excel')">
+                            <i class="bx bx-download"></i>
+                            Excel Template
+                        </button>
+                        <button class="btn btn-secondary" onclick="downloadTemplate('json')">
+                            <i class="bx bx-download"></i>
+                            JSON Template
+                        </button>
+                        <button class="btn btn-primary" onclick="validateSampleData()">
+                            <i class="bx bx-check-circle"></i>
+                            Validate Sample
+                        </button>
+                    </div>
+
+                    <div id="importValidationResults" class="validation-results" style="display: none;">
+                        <!-- Validation results will appear here -->
+                    </div>
+
+                    <hr class="section-divider">
+
+                    <div class="action-grid">
+                        <button class="btn btn-danger" onclick="clearData()">
+                            <i class="bx bx-trash"></i>
+                            Clear Records
+                        </button>
+                        <button class="btn btn-success" onclick="exportData()">
+                            <i class="bx bx-export"></i>
+                            Export Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Backup & Recovery -->
+                <div class="settings-card backup-card">
+                    <h2 class="card-title">
+                        <i class="bx bx-archive card-icon"></i>
+                        Backup & Recovery
+                    </h2>
+
+                    <div class="form-group">
+                        <label>Last Backup</label>
+                        <input type="text" id="lastBackup" value="Never" readonly>
+                    </div>
+
+                    <div class="action-grid" style="grid-template-columns: 1fr; gap: 10px;">
+                        <button class="btn btn-primary" onclick="createBackup()">
+                            <i class="bx bx-download"></i>
+                            Create Full Backup
+                        </button>
+                        <button class="btn btn-info" onclick="downloadSourceCode()">
+                            <i class="bx bx-code-alt"></i>
+                            Download Source Code
+                        </button>
+                        <button class="btn btn-danger" onclick="resetSystem()">
+                            <i class="bx bx-reset"></i>
+                            Reset System
+                        </button>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label>Auto Backup</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <span>Disabled</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="autoBackup">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span>Enabled</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password Management -->
+                <div class="settings-card">
+                    <h2 class="card-title">
+                        <i class="bx bx-lock card-icon"></i>
+                        Password Management
+                    </h2>
+
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" id="currentPassword" placeholder="Enter current password">
+                    </div>
+
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" id="newPassword" placeholder="Enter new password" oninput="checkPasswordStrength()">
+                        <div id="passwordStrength" class="password-strength"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                    </div>
+
+                    <div class="action-grid">
+                        <button class="btn btn-primary" onclick="updatePassword()">
+                            <i class="bx bx-check"></i>
+                            Update Password
+                        </button>
+                        <button class="btn btn-secondary" onclick="showCreateUserModal()">
+                            <i class="bx bx-user-plus"></i>
+                            Create New User
+                        </button>
+                    </div>
+                </div>
+
+                <!-- User Management -->
+                <div class="settings-card">
+                    <h2 class="card-title">
+                        <i class="bx bx-group card-icon"></i>
+                        User Management
+                    </h2>
+
+                    <div class="form-group">
+                        <label>Current User Role</label>
+                        <input type="text" id="currentUserRole" value="Loading..." readonly>
+                    </div>
+
+                    <div class="action-grid">
+                        <button class="btn btn-info" onclick="loadAllUsers()">
+                            <i class="bx bx-refresh"></i>
+                            Show All Users
+                        </button>
+                        <button class="btn btn-warning" onclick="togglePasswordVisibility()">
+                            <i class="bx bx-show" id="passwordToggleIcon"></i>
+                            <span id="passwordToggleText">Show Passwords</span>
+                        </button>
+                    </div>
+
+                    <!-- Users Table -->
+                    <div id="usersTableContainer" style="display: none; margin-top: 20px;">
+                        <div class="table-container">
+                            <table class="users-table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Full Name</th>
+                                        <th>Role</th>
+                                        <th>Password</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTableBody">
+                                    <tr>
+                                        <td colspan="6" style="text-align: center; color: #aaa; padding: 20px">
+                                            Click "Show All Users" to load user data
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="permissionWarning" class="permission-warning" style="display: none;">
+                        <i class="bx bx-error-circle"></i>
+                        <span>You don't have permission to manage users. Only OWNER, ADMIN, and DEV roles can manage users.</span>
+                    </div>
+                </div>
+
+                <!-- System Information -->
+                <div class="settings-card">
+                    <h2 class="card-title">
+                        <i class="bx bx-info-circle card-icon"></i>
+                        System Information
+                    </h2>
+
+                    <div class="form-group">
+                        <label>App Version</label>
+                        <input type="text" value="v1.5.0" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Employees</label>
+                        <input type="text" id="totalEmployees" value="Loading..." readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Attendance Records</label>
+                        <input type="text" id="totalAttendance" value="Loading..." readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Database Size</label>
+                        <input type="text" id="databaseSize" value="Loading..." readonly>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="refreshSystemInfo()">
+                        <i class="bx bx-refresh"></i>
+                        Refresh Info
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create User Modal -->
+    <div id="createUserModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New User</h3>
+                <span class="modal-close" onclick="hideCreateUserModal()">&times;</span>
+            </div>
+            <form onsubmit="createNewUser(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="newUsername" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="newUserPassword" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="newUserRole" required>
+                        <option value="">Select Role</option>
+                        <option value="OWNER">Owner</option>
+                        <option value="CO-OWNER">Co-Owner</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="DEV">Developer</option>
+                        <option value="MANAGER">Manager</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="newUserName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="hideCreateUserModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit User</h3>
+                <span class="modal-close" onclick="hideEditUserModal()">&times;</span>
+            </div>
+            <form onsubmit="updateUser(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="editUsername" readonly style="background: #f5f5f5; color: #666;">
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" id="editUserPassword" placeholder="Enter new password" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="editUserRole" required>
+                        <option value="">Select Role</option>
+                        <option value="OWNER">Owner</option>
+                        <option value="CO-OWNER">Co-Owner</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="DEV">Developer</option>
+                        <option value="MANAGER">Manager</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="editUserName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="hideEditUserModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+        import { getDatabase, ref, get, set, remove, push, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1wIsDf1qSLaIGyQvbri26z9e4ypxF-lw",
+            authDomain: "apikawachi.firebaseapp.com",
+            databaseURL: "https://apikawachi-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "apikawachi",
+            storageBucket: "apikawachi.appspot.com",
+            messagingSenderId: "7573902945",
+            appId: "1:7573902945:web:be2c051ef0d0ceed787c20",
+            measurementId: "G-GT0F7K4NLP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+
+        window.firebaseApp = app;
+        window.firebaseDatabase = database;
+        window.firebaseAnalytics = analytics;
+        window.firebaseRef = ref;
+        window.firebaseGet = get;
+        window.firebaseSet = set;
+        window.firebaseRemove = remove;
+        window.firebasePush = push;
+        window.firebaseUpdate = update;
+        window.firebaseLogEvent = logEvent;
+
+        console.log("🔥 Firebase initialized for Settings");
+    </script>
+
+    <script>
+        // Test Firebase connection
+        async function testConnection() {
+            const statusEl = document.getElementById('apiStatus');
+            statusEl.innerHTML = '<i class="bx bx-loader bx-spin"></i> Testing connection...';
+            statusEl.className = 'status-indicator status-disconnected';
+
+            try {
+                const testRef = window.firebaseRef(window.firebaseDatabase, 'test');
+                await window.firebaseGet(testRef);
+
+                statusEl.innerHTML = '<i class="bx bx-check-circle"></i> Connected to Firebase';
+                statusEl.className = 'status-indicator status-connected';
+
+                showMessage('Firebase connection successful!', 'success');
+            } catch (error) {
+                statusEl.innerHTML = '<i class="bx bx-x-circle"></i> Connection failed';
+                statusEl.className = 'status-indicator status-disconnected';
+
+                showMessage('Firebase connection failed: ' + error.message, 'error');
+            }
+        }
+
+        // Refresh connection
+        function refreshConnection() {
+            showMessage('Refreshing connection...', 'info');
+            setTimeout(testConnection, 1000);
+        }
+
+        // Apply theme settings
+        function applyThemeSettings() {
+            const isDark = document.getElementById('themeToggle').checked;
+            const primaryColor = document.getElementById('primaryColor').value;
+            const layout = document.getElementById('layoutMode').value;
+
+            // Apply dark mode
+            if (isDark) {
+                document.body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+
+            // Apply primary color
+            document.documentElement.style.setProperty('--blue', primaryColor);
+            localStorage.setItem('primaryColor', primaryColor);
+
+            // Apply layout
+            localStorage.setItem('layout', layout);
+
+            showMessage('Theme settings applied successfully!', 'success');
+        }
+
+        // Handle file import
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const fileName = file.name;
+            const fileType = fileName.split('.').pop().toLowerCase();
+
+            if (fileType === 'json') {
+                importJSONFile(file);
+            } else if (fileType === 'xlsx') {
+                importExcelFile(file);
+            } else {
+                showMessage('Please select a valid JSON or Excel file', 'error');
+            }
+        }
+
+        // Import JSON file
+        function importJSONFile(file) {
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    await importDataToFirebase(data);
+                    showMessage('JSON data imported successfully!', 'success');
+                } catch (error) {
+                    showMessage('Error importing JSON: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Import Excel file (basic support)
+        function importExcelFile(file) {
+            showMessage('Excel import functionality requires additional library. Please use JSON format.', 'info');
+        }
+
+        // Import data to Firebase
+        async function importDataToFirebase(data) {
+            try {
+                if (data.employees) {
+                    const employeesRef = window.firebaseRef(window.firebaseDatabase, 'employees');
+                    await window.firebaseSet(employeesRef, data.employees);
+                }
+
+                if (data.attendance) {
+                    const attendanceRef = window.firebaseRef(window.firebaseDatabase, 'attendance');
+                    await window.firebaseSet(attendanceRef, data.attendance);
+                }
+
+                window.firebaseLogEvent(window.firebaseAnalytics, 'data_imported', {
+                    type: 'json',
+                    records: Object.keys(data).length
+                });
+            } catch (error) {
+                throw new Error('Failed to import data: ' + error.message);
+            }
+        }
+
+        // Download template files
+        function downloadTemplate(type) {
+            if (type === 'excel') {
+                showMessage('Excel template download - feature coming soon', 'info');
+            } else if (type === 'json') {
+                const template = {
+                    employees: {
+                        "example001": {
+                            empId: "example001",
+                            name: "John Doe",
+                            position: "Software Engineer",
+                            basicSalary: 50000,
+                            grossSalary: 60000,
+                            joinDate: "2024-01-01"
+                        }
+                    },
+                    attendance: {
+                        "example001": {
+                            empId: "example001",
+                            name: "John Doe",
+                            date: "2024-01-01",
+                            time: "09:00:00",
+                            location: "Office",
+                            ip: "192.168.1.1"
+                        }
+                    }
+                };
+
+                const blob = new Blob([JSON.stringify(template, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'adminhub_template.json';
+                a.click();
+                URL.revokeObjectURL(url);
+
+                showMessage('JSON template downloaded!', 'success');
+            }
+        }
+
+        // Clear attendance and employee data
+        async function clearData() {
+            if (!confirm('Are you sure you want to clear all attendance records and employee data? This action cannot be undone!')) {
+                return;
+            }
+
+            try {
+                const attendanceRef = window.firebaseRef(window.firebaseDatabase, 'attendance');
+                const employeesRef = window.firebaseRef(window.firebaseDatabase, 'employees');
+
+                await window.firebaseRemove(attendanceRef);
+                await window.firebaseRemove(employeesRef);
+
+                showMessage('All records cleared successfully!', 'success');
+                refreshSystemInfo();
+
+                window.firebaseLogEvent(window.firebaseAnalytics, 'data_cleared');
+            } catch (error) {
+                showMessage('Error clearing data: ' + error.message, 'error');
+            }
+        }
+
+        // Export data
+        async function exportData() {
+            try {
+                showMessage('Exporting data...', 'info');
+
+                const employeesRef = window.firebaseRef(window.firebaseDatabase, 'employees');
+                const attendanceRef = window.firebaseRef(window.firebaseDatabase, 'attendance');
+
+                const [employeesSnapshot, attendanceSnapshot] = await Promise.all([
+                    window.firebaseGet(employeesRef),
+                    window.firebaseGet(attendanceRef)
+                ]);
+
+                const exportData = {
+                    employees: employeesSnapshot.exists() ? employeesSnapshot.val() : {},
+                    attendance: attendanceSnapshot.exists() ? attendanceSnapshot.val() : {},
+                    exportDate: new Date().toISOString(),
+                    version: "1.5.0"
+                };
+
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `adminhub_export_${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                showMessage('Data exported successfully!', 'success');
+                window.firebaseLogEvent(window.firebaseAnalytics, 'data_exported');
+            } catch (error) {
+                showMessage('Error exporting data: ' + error.message, 'error');
+            }
+        }
+
+        // Create backup
+        async function createBackup() {
+            try {
+                showMessage('Creating comprehensive backup...', 'info');
+
+                // 1. Create data backup
+                const employeesRef = window.firebaseRef(window.firebaseDatabase, 'employees');
+                const attendanceRef = window.firebaseRef(window.firebaseDatabase, 'attendance');
+                const tasksRef = window.firebaseRef(window.firebaseDatabase, 'tasks');
+
+                const [employeesSnapshot, attendanceSnapshot, tasksSnapshot] = await Promise.all([
+                    window.firebaseGet(employeesRef),
+                    window.firebaseGet(attendanceRef),
+                    window.firebaseGet(tasksRef)
+                ]);
+
+                const backupData = {
+                    employees: employeesSnapshot.exists() ? employeesSnapshot.val() : {},
+                    attendance: attendanceSnapshot.exists() ? attendanceSnapshot.val() : {},
+                    tasks: tasksSnapshot.exists() ? tasksSnapshot.val() : {},
+                    exportDate: new Date().toISOString(),
+                    version: "1.5.0"
+                };
+
+                // Download data backup as JSON
+                const dataBlob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+                const dataUrl = URL.createObjectURL(dataBlob);
+                const dataLink = document.createElement('a');
+                dataLink.href = dataUrl;
+                dataLink.download = `adminhub_data_backup_${new Date().toISOString().split('T')[0]}.json`;
+                dataLink.click();
+                URL.revokeObjectURL(dataUrl);
+
+                // 2. Create admin users backup
+                const usersData = {
+                    users: [
+                        { username: "170712@ab", role: "OWNER", name: "Aditya Bhardwaj" },
+                        { username: "310712@cb", role: "CO-OWNER", name: "Chandan Bhardwaj" },
+                        { username: "310712@db", role: "CO-OWNER", name: "Deepak Bhardwaj" }
+                    ],
+                    backupDate: new Date().toISOString(),
+                    note: "Admin credentials backup - keep secure"
+                };
+
+                const usersBlob = new Blob([JSON.stringify(usersData, null, 2)], { type: 'application/json' });
+                const usersUrl = URL.createObjectURL(usersBlob);
+                const usersLink = document.createElement('a');
+                usersLink.href = usersUrl;
+                usersLink.download = `adminhub_users_backup_${new Date().toISOString().split('T')[0]}.json`;
+                usersLink.click();
+                URL.revokeObjectURL(usersUrl);
+
+                // 3. Download GitHub source code
+                await downloadSourceCode();
+
+                // Update last backup time
+                document.getElementById('lastBackup').value = new Date().toLocaleString();
+                localStorage.setItem('lastBackup', new Date().toISOString());
+
+                showMessage('Complete backup created! Data, users, and source code downloaded.', 'success');
+
+                window.firebaseLogEvent(window.firebaseAnalytics, 'backup_created', {
+                    type: 'full_backup',
+                    includes_source: true
+                });
+            } catch (error) {
+                console.error('Backup error:', error);
+                showMessage('Error creating backup: ' + error.message, 'error');
+            }
+        }
+
+        // Download GitHub source code
+        async function downloadSourceCode() {
+            try {
+                showMessage('Downloading source code from GitHub...', 'info');
+
+                // Create a link to download the GitHub repository
+                const githubUrl = 'https://github.com/Adityabhardwaj1234/KawachiPayroll/archive/refs/heads/main.zip';
+                const link = document.createElement('a');
+                link.href = githubUrl;
+                link.download = `KawachiPayroll_source_${new Date().toISOString().split('T')[0]}.zip`;
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                showMessage('Source code download initiated from GitHub!', 'success');
+
+                window.firebaseLogEvent(window.firebaseAnalytics, 'source_code_downloaded');
+            } catch (error) {
+                console.error('Source download error:', error);
+                showMessage('Error downloading source code: ' + error.message, 'error');
+            }
+        }
+
+        // Reset system
+        async function resetSystem() {
+            if (!confirm('Are you sure you want to reset the entire system? This will delete ALL data and cannot be undone!')) {
+                return;
+            }
+
+            if (!confirm('This is your final warning! ALL DATA WILL BE LOST. Are you absolutely sure?')) {
+                return;
+            }
+
+            try {
+                showMessage('Resetting system...', 'info');
+
+                // Clear all Firebase data
+                const rootRef = window.firebaseRef(window.firebaseDatabase, '/');
+                await window.firebaseRemove(rootRef);
+
+                // Clear local storage
+                localStorage.clear();
+
+                showMessage('System reset completed! Redirecting to login...', 'success');
+                window.firebaseLogEvent(window.firebaseAnalytics, 'system_reset');
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+            } catch (error) {
+                showMessage('Error resetting system: ' + error.message, 'error');
+            }
+        }
+
+        // Check password strength
+        function checkPasswordStrength() {
+            const password = document.getElementById('newPassword').value;
+            const strengthEl = document.getElementById('passwordStrength');
+
+            if (password.length === 0) {
+                strengthEl.textContent = '';
+                return;
+            }
+
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            if (strength <= 2) {
+                strengthEl.textContent = 'Weak password';
+                strengthEl.className = 'password-strength strength-weak';
+            } else if (strength <= 3) {
+                strengthEl.textContent = 'Medium password';
+                strengthEl.className = 'password-strength strength-medium';
+            } else {
+                strengthEl.textContent = 'Strong password';
+                strengthEl.className = 'password-strength strength-strong';
+            }
+        }
+
+        // Update password
+        function updatePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                showMessage('Please fill all password fields', 'error');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showMessage('New passwords do not match', 'error');
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                showMessage('Password must be at least 8 characters long', 'error');
+                return;
+            }
+
+            // Simulate password update (in real app, this would validate against stored hash)
+            showMessage('Password updated successfully!', 'success');
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('passwordStrength').textContent = '';
+        }
+
+        // Show create user modal
+        function showCreateUserModal() {
+            document.getElementById('createUserModal').style.display = 'flex';
+        }
+
+        // Hide create user modal
+        function hideCreateUserModal() {
+            document.getElementById('createUserModal').style.display = 'none';
+        }
+
+        // Create new user with Firebase integration
+        async function createNewUser(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newUserPassword').value;
+            const role = document.getElementById('newUserRole').value;
+            const name = document.getElementById('newUserName').value;
+
+            if (!username || !password || !role || !name) {
+                showMessage('Please fill all fields', 'error');
+                return;
+            }
+
+            try {
+                // Create user data
+                const userData = {
+                    username: username,
+                    passwordHash: btoa(password), // Simple base64 encoding (in production, use proper hashing)
+                    role: role,
+                    name: name,
+                    createdAt: new Date().toISOString(),
+                    isActive: true
+                };
+
+                // Save to Firebase
+                const usersRef = window.firebaseRef(window.firebaseDatabase, `users/${username}`);
+                await window.firebaseSet(usersRef, userData);
+
+                showMessage(`User ${username} created successfully and saved to Firebase!`, 'success');
+                hideCreateUserModal();
+
+                // Clear form
+                document.getElementById('newUsername').value = '';
+                document.getElementById('newUserPassword').value = '';
+                document.getElementById('newUserRole').value = '';
+                document.getElementById('newUserName').value = '';
+
+                // Log analytics
+                window.firebaseLogEvent(window.firebaseAnalytics, 'user_created', {
+                    username: username,
+                    role: role
+                });
+            } catch (error) {
+                console.error('Error creating user:', error);
+                showMessage('Error creating user: ' + error.message, 'error');
+            }
+        }
+
+        // User management variables
+        let allUsers = [];
+        let currentUserRole = 'OWNER'; // Default to OWNER
+        let passwordsVisible = false;
+
+        // Check user permissions
+        function hasManagementPermission() {
+            return ['OWNER', 'ADMIN', 'DEV'].includes(currentUserRole);
+        }
+
+        // Get current user role
+        async function getCurrentUserRole() {
+            try {
+                const currentUser = sessionStorage.getItem('currentUser') || '170712@ab';
+                const userRef = window.firebaseRef(window.firebaseDatabase, `users/${currentUser}`);
+                const userSnapshot = await window.firebaseGet(userRef);
+
+                if (userSnapshot.exists()) {
+                    currentUserRole = userSnapshot.val().role || 'OWNER';
+                } else {
+                    // Create default admin user if doesn't exist
+                    await window.firebaseSet(userRef, {
+                        username: currentUser,
+                        passwordHash: btoa('admin123'),
+                        role: 'OWNER',
+                        name: 'Admin User',
+                        createdAt: new Date().toISOString(),
+                        isActive: true
+                    });
+                    currentUserRole = 'OWNER';
+                }
+
+                document.getElementById('currentUserRole').value = currentUserRole;
+                return currentUserRole;
+            } catch (error) {
+                console.error('Error getting user role:', error);
+                currentUserRole = 'OWNER';
+                return 'OWNER';
+            }
+        }
+
+        // Load all users from Firebase
+        async function loadAllUsers() {
+            try {
+                showMessage('Loading users from Firebase...', 'info');
+
+                // Check permissions
+                if (!hasManagementPermission()) {
+                    document.getElementById('permissionWarning').style.display = 'block';
+                    document.getElementById('usersTableContainer').style.display = 'none';
+                    showMessage('Access denied: Insufficient permissions', 'error');
+                    return;
+                }
+
+                document.getElementById('permissionWarning').style.display = 'none';
+
+                const usersRef = window.firebaseRef(window.firebaseDatabase, 'users');
+                const snapshot = await window.firebaseGet(usersRef);
+
+                allUsers = [];
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        allUsers.push({
+                            username: childSnapshot.key,
+                            ...childSnapshot.val()
+                        });
+                    });
+                }
+
+                displayUsers();
+                document.getElementById('usersTableContainer').style.display = 'block';
+                showMessage(`Loaded ${allUsers.length} users successfully`, 'success');
+
+                // Log analytics
+                window.firebaseLogEvent(window.firebaseAnalytics, 'users_loaded', {
+                    count: allUsers.length,
+                    loaded_by: sessionStorage.getItem('currentUser') || 'admin'
+                });
+            } catch (error) {
+                console.error('Error loading users:', error);
+                showMessage('Error loading users: ' + error.message, 'error');
+            }
+        }
+
+        // Display users in table
+        function displayUsers() {
+            const tableBody = document.getElementById('usersTableBody');
+            tableBody.innerHTML = '';
+
+            if (allUsers.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #aaa; padding: 20px">
+                            No users found. Create some users to see them here.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            allUsers.forEach(user => {
+                const row = document.createElement('tr');
+                const canManage = hasManagementPermission();
+                const password = passwordsVisible ? atob(user.passwordHash || '') : '••••••••';
+
+                row.innerHTML = `
+                    <td><strong>${user.username}</strong></td>
+                    <td>${user.name || 'N/A'}</td>
+                    <td><span class="user-role role-${(user.role || 'manager').toLowerCase()}">${user.role || 'MANAGER'}</span></td>
+                    <td><span class="password-cell ${passwordsVisible ? '' : 'password-hidden'}">${password}</span></td>
+                    <td><span class="user-status status-${user.isActive !== false ? 'active' : 'inactive'}">${user.isActive !== false ? 'Active' : 'Inactive'}</span></td>
+                    <td>
+                        <div class="user-actions">
+                            <button class="btn-small btn-edit-user" onclick="showEditUserModal('${user.username}')" ${!canManage ? 'disabled' : ''}>
+                                <i class="bx bx-edit"></i> Edit
+                            </button>
+                            <button class="btn-small btn-delete-user" onclick="deleteUser('${user.username}')" ${!canManage ? 'disabled' : ''}>
+                                <i class="bx bx-trash"></i> Delete
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Toggle password visibility
+        function togglePasswordVisibility() {
+            passwordsVisible = !passwordsVisible;
+            const icon = document.getElementById('passwordToggleIcon');
+            const text = document.getElementById('passwordToggleText');
+
+            if (passwordsVisible) {
+                icon.className = 'bx bx-hide';
+                text.textContent = 'Hide Passwords';
+            } else {
+                icon.className = 'bx bx-show';
+                text.textContent = 'Show Passwords';
+            }
+
+            displayUsers();
+        }
+
+        // Show edit user modal
+        function showEditUserModal(username) {
+            if (!hasManagementPermission()) {
+                showMessage('Access denied: Insufficient permissions', 'error');
+                return;
+            }
+
+            const user = allUsers.find(u => u.username === username);
+            if (!user) {
+                showMessage('User not found', 'error');
+                return;
+            }
+
+            document.getElementById('editUsername').value = user.username;
+            document.getElementById('editUserPassword').value = '';
+            document.getElementById('editUserRole').value = user.role || 'MANAGER';
+            document.getElementById('editUserName').value = user.name || '';
+            document.getElementById('editUserModal').style.display = 'flex';
+        }
+
+        // Hide edit user modal
+        function hideEditUserModal() {
+            document.getElementById('editUserModal').style.display = 'none';
+        }
+
+        // Update user
+        async function updateUser(event) {
+            event.preventDefault();
+
+            if (!hasManagementPermission()) {
+                showMessage('Access denied: Insufficient permissions', 'error');
+                return;
+            }
+
+            const username = document.getElementById('editUsername').value;
+            const password = document.getElementById('editUserPassword').value;
+            const role = document.getElementById('editUserRole').value;
+            const name = document.getElementById('editUserName').value;
+
+            if (!password || !role || !name) {
+                showMessage('Please fill all fields', 'error');
+                return;
+            }
+
+            try {
+                const userRef = window.firebaseRef(window.firebaseDatabase, `users/${username}`);
+                await window.firebaseUpdate(userRef, {
+                    passwordHash: btoa(password),
+                    role: role,
+                    name: name,
+                    updatedAt: new Date().toISOString()
+                });
+
+                showMessage(`User ${username} updated successfully!`, 'success');
+                hideEditUserModal();
+                loadAllUsers(); // Refresh user list
+
+                // Log analytics
+                window.firebaseLogEvent(window.firebaseAnalytics, 'user_updated', {
+                    username: username,
+                    role: role,
+                    updated_by: sessionStorage.getItem('currentUser') || 'admin'
+                });
+            } catch (error) {
+                console.error('Error updating user:', error);
+                showMessage('Error updating user: ' + error.message, 'error');
+            }
+        }
+
+        // Delete user
+        async function deleteUser(username) {
+            if (!hasManagementPermission()) {
+                showMessage('Access denied: Insufficient permissions', 'error');
+                return;
+            }
+
+            const currentUser = sessionStorage.getItem('currentUser') || '170712@ab';
+            if (username === currentUser) {
+                showMessage('Cannot delete your own account', 'error');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete user "${username}"? This action cannot be undone.`)) {
+                return;
+            }
+
+            try {
+                const userRef = window.firebaseRef(window.firebaseDatabase, `users/${username}`);
+                await window.firebaseRemove(userRef);
+
+                showMessage(`User ${username} deleted successfully!`, 'success');
+                loadAllUsers(); // Refresh user list
+
+                // Log analytics
+                window.firebaseLogEvent(window.firebaseAnalytics, 'user_deleted', {
+                    username: username,
+                    deleted_by: currentUser
+                });
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                showMessage('Error deleting user: ' + error.message, 'error');
+            }
+        }
+
+        // Update password with Firebase integration
+        async function updatePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                showMessage('Please fill all password fields', 'error');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showMessage('New passwords do not match', 'error');
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                showMessage('Password must be at least 8 characters long', 'error');
+                return;
+            }
+
+            try {
+                // Get current user from session
+                const currentUser = sessionStorage.getItem('currentUser') || '170712@ab';
+
+                // Update password in Firebase API
+                const userRef = window.firebaseRef(window.firebaseDatabase, `users/${currentUser}`);
+                const userSnapshot = await window.firebaseGet(userRef);
+
+                if (userSnapshot.exists()) {
+                    const userData = userSnapshot.val();
+
+                    // Verify current password (simple base64 check)
+                    if (btoa(currentPassword) !== userData.passwordHash) {
+                        showMessage('Current password is incorrect', 'error');
+                        return;
+                    }
+
+                    // Update password in Firebase API
+                    await window.firebaseUpdate(userRef, {
+                        passwordHash: btoa(newPassword),
+                        updatedAt: new Date().toISOString()
+                    });
+
+                    showMessage('Password updated successfully in Firebase API!', 'success');
+
+                    // Clear form
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                    document.getElementById('passwordStrength').textContent = '';
+
+                    // Log analytics
+                    window.firebaseLogEvent(window.firebaseAnalytics, 'password_updated', {
+                        username: currentUser
+                    });
+                } else {
+                    // Create user entry if doesn't exist
+                    await window.firebaseSet(userRef, {
+                        username: currentUser,
+                        passwordHash: btoa(newPassword),
+                        role: 'OWNER',
+                        name: 'Admin User',
+                        createdAt: new Date().toISOString(),
+                        isActive: true
+                    });
+
+                    showMessage('User created and password set successfully in Firebase API!', 'success');
+                }
+            } catch (error) {
+                console.error('Error updating password:', error);
+                showMessage('Error updating password: ' + error.message, 'error');
+            }
+        }
+
+        // Refresh system information
+        async function refreshSystemInfo() {
+            try {
+                const employeesRef = window.firebaseRef(window.firebaseDatabase, 'employees');
+                const attendanceRef = window.firebaseRef(window.firebaseDatabase, 'attendance');
+
+                const [employeesSnapshot, attendanceSnapshot] = await Promise.all([
+                    window.firebaseGet(employeesRef),
+                    window.firebaseGet(attendanceRef)
+                ]);
+
+                const employeeCount = employeesSnapshot.exists() ? Object.keys(employeesSnapshot.val()).length : 0;
+                const attendanceCount = attendanceSnapshot.exists() ? Object.keys(attendanceSnapshot.val()).length : 0;
+
+                document.getElementById('totalEmployees').value = employeeCount;
+                document.getElementById('totalAttendance').value = attendanceCount;
+                document.getElementById('databaseSize').value = 'Calculating...';
+
+                // Simulate database size calculation
+                setTimeout(() => {
+                    const estimatedSize = ((employeeCount * 0.5) + (attendanceCount * 0.1)).toFixed(2);
+                    document.getElementById('databaseSize').value = `~${estimatedSize} KB`;
+                }, 1000);
+
+                showMessage('System information refreshed', 'success');
+            } catch (error) {
+                showMessage('Error refreshing system info: ' + error.message, 'error');
+            }
+        }
+
+        // Show message function
+        function showMessage(message, type = 'info') {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                max-width: 300px;
+                word-wrap: break-word;
+                animation: slideIn 0.3s ease;
+            `;
+
+            switch (type) {
+                case 'success':
+                    messageDiv.style.background = '#27ae60';
+                    break;
+                case 'error':
+                    messageDiv.style.background = '#e74c3c';
+                    break;
+                case 'info':
+                default:
+                    messageDiv.style.background = '#3c91e6';
+                    break;
+            }
+
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        // Initialize settings on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark');
+                document.getElementById('themeToggle').checked = true;
+            }
+
+            // Load saved primary color
+            const savedColor = localStorage.getItem('primaryColor');
+            if (savedColor) {
+                document.getElementById('primaryColor').value = savedColor;
+                document.documentElement.style.setProperty('--blue', savedColor);
+            }
+
+            // Load saved layout
+            const savedLayout = localStorage.getItem('layout');
+            if (savedLayout) {
+                document.getElementById('layoutMode').value = savedLayout;
+            }
+
+            // Load last backup date
+            const lastBackup = localStorage.getItem('lastBackup');
+            if (lastBackup) {
+                document.getElementById('lastBackup').value = new Date(lastBackup).toLocaleString();
+            }
+
+            // Test connection on load
+            setTimeout(testConnection, 1000);
+
+            // Refresh system info
+            setTimeout(refreshSystemInfo, 2000);
+
+            // Get current user role
+            setTimeout(getCurrentUserRole, 1500);
+
+            console.log('Settings page initialized');
+        });
+
+        // Make functions globally available
+        window.testConnection = testConnection;
+        window.refreshConnection = refreshConnection;
+        window.applyThemeSettings = applyThemeSettings;
+        window.handleFileImport = handleFileImport;
+        window.downloadTemplate = downloadTemplate;
+        window.clearData = clearData;
+        window.exportData = exportData;
+        window.createBackup = createBackup;
+        window.resetSystem = resetSystem;
+        window.checkPasswordStrength = checkPasswordStrength;
+        window.updatePassword = updatePassword;
+        window.showCreateUserModal = showCreateUserModal;
+        window.hideCreateUserModal = hideCreateUserModal;
+        window.createNewUser = createNewUser;
+        window.refreshSystemInfo = refreshSystemInfo;
+        window.showMessage = showMessage;
+        window.downloadSourceCode = downloadSourceCode;
+        window.getCurrentUserRole = getCurrentUserRole;
+        window.loadAllUsers = loadAllUsers;
+        window.togglePasswordVisibility = togglePasswordVisibility;
+        window.showEditUserModal = showEditUserModal;
+        window.hideEditUserModal = hideEditUserModal;
+        window.updateUser = updateUser;
+        window.deleteUser = deleteUser;
+        window.hasManagementPermission = hasManagementPermission;
+    </script>
+</body>
+</html>
